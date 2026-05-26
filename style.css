@@ -9,8 +9,31 @@ body {
     background: #f4f4f9;
     color: #333;
     line-height: 1.6;
+    animation: fadeIn 1s ease-out;
 }
 
+/* === АНИМАЦИИ === */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes expandUnderline {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* === ШАПКА === */
 .site-header {
     display: flex;
     justify-content: space-between;
@@ -18,6 +41,9 @@ body {
     padding: 15px 40px;
     background: white;
     border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .site-header h1 {
@@ -31,6 +57,7 @@ body {
     margin-left: 10px;
 }
 
+/* === КОНТЕЙНЕР === */
 .main-wrapper {
     display: flex;
     max-width: 1300px;
@@ -39,6 +66,7 @@ body {
     gap: 25px;
 }
 
+/* === БОКОВОЕ МЕНЮ === */
 .sidebar {
     width: 220px;
     display: flex;
@@ -46,6 +74,7 @@ body {
     gap: 8px;
     padding-top: 10px;
     flex-shrink: 0;
+    animation: slideInLeft 0.8s ease-out;
 }
 
 .nav-link {
@@ -56,35 +85,57 @@ body {
     font-weight: 500;
     border-radius: 8px;
     border-left: 3px solid transparent;
-    transition: 0.2s;
+    background: transparent;
+    transition: all 0.3s ease;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+    background: #e8e8f0;
+    color: #2b2b50;
+    padding-left: 20px;
+}
+
+.nav-link:active {
+    transform: scale(0.98);
+}
+
 .nav-link.active {
     background: #f0f0ff;
     color: #2b2b50;
     border-left: 3px solid #f6a623;
+    font-weight: bold;
 }
 
+/* === ОСНОВНОЙ КОНТЕНТ === */
 .content {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 25px;
+    animation: slideUp 0.8s ease-out;
 }
 
+/* === HERO СЕКЦИЯ === */
 .hero {
     background: white;
     border-radius: 16px;
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s;
 }
 
+.hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* === ЛОГОТИП И ЗАГОЛОВОК === */
 .logo-container {
     display: flex;
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .neural-logo {
@@ -95,6 +146,13 @@ body {
     background: white;
     padding: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+}
+
+.neural-logo:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 .company-badge {
@@ -105,20 +163,44 @@ body {
     border-radius: 20px;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .hero h2 {
-    font-size: 32px;
+    font-size: 36px;
     color: #2b2b50;
-    margin-bottom: 15px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Анимированная линия под заголовком */
+.hero h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f6a623, #ffa726);
+    border-radius: 2px;
+    animation: expandUnderline 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+/* === ИНФОРМАЦИЯ === */
+.hero > p {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
 }
 
 .info-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .info-box {
@@ -127,11 +209,21 @@ body {
     background: #dcdcf5;
     padding: 20px;
     border-radius: 12px;
+    transition: transform 0.3s;
+    animation: slideUp 0.8s ease-out both;
+}
+
+.info-box:nth-child(1) { animation-delay: 0.2s; }
+.info-box:nth-child(2) { animation-delay: 0.4s; }
+
+.info-box:hover {
+    transform: translateY(-5px);
 }
 
 .info-box h4 {
     color: #2b2b50;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-size: 16px;
 }
 
 .info-box ul {
@@ -139,11 +231,29 @@ body {
     font-size: 14px;
 }
 
+.info-box li {
+    margin-bottom: 6px;
+    opacity: 0;
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+.info-box li:nth-child(1) { animation-delay: 0.3s; }
+.info-box li:nth-child(2) { animation-delay: 0.5s; }
+.info-box li:nth-child(3) { animation-delay: 0.7s; }
+
+/* === КАРТОЧКА ПЛЮСЫ/МИНУСЫ === */
 .feature-card {
     background: white;
     border-radius: 16px;
     padding: 25px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
 
 .feature-card h3 {
@@ -164,64 +274,117 @@ body {
     min-width: 200px;
 }
 
-.pros h4 { color: #2e7d32; margin-bottom: 10px; }
-.cons h4 { color: #c62828; margin-bottom: 10px; }
+.pros h4 { 
+    color: #2e7d32; 
+    margin-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+}
+
+.cons h4 { 
+    color: #c62828; 
+    margin-bottom: 10px; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+}
 
 .pros ul, .cons ul {
     padding-left: 20px;
     font-size: 14px;
 }
 
+.pros li, .cons li {
+    margin-bottom: 8px;
+}
+
+/* === ТЕГИ === */
 .use-cases {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .tag {
     background: #f0f0ff;
     color: #2b2b50;
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 20px;
     font-size: 13px;
+    font-weight: 500;
+    cursor: default;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
 }
 
+.tag:hover {
+    background: #2b2b50;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(43, 43, 80, 0.3);
+}
+
+.tag:active {
+    transform: scale(0.95);
+}
+
+/* === FOOTER === */
 .footer-note {
     text-align: center;
     padding: 20px;
     color: #666;
     font-size: 13px;
+    animation: fadeIn 1.5s ease-out;
 }
 
+/* === АДАПТИВНОСТЬ === */
 @media (max-width: 900px) {
     .main-wrapper {
         flex-direction: column;
     }
+    
     .sidebar {
         width: 100%;
         flex-direction: row;
         flex-wrap: wrap;
         padding-top: 0;
+        margin-bottom: 20px;
+        animation: none;
     }
+    
     .nav-link {
         flex: 1;
         min-width: 120px;
         text-align: center;
         border-left: none;
         border-bottom: 3px solid transparent;
+        padding: 10px;
     }
-    .nav-link:hover,
+    
+    .nav-link:hover {
+        padding-left: 10px;
+        border-bottom: 3px solid #f6a623;
+    }
+    
     .nav-link.active {
         border-left: none;
         border-bottom: 3px solid #f6a623;
     }
-    .pros-cons {
-        flex-direction: column;
-        gap: 20px;
-    }
+    
     .logo-container {
         flex-direction: column;
         text-align: center;
+        align-items: center;
+    }
+    
+    .hero h2 {
+        font-size: 28px;
+    }
+    
+    .pros-cons {
+        flex-direction: column;
+        gap: 20px;
     }
 }
